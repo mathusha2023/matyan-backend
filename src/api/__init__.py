@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 from src.api.auth import router as auth_router
 from src.api.users import router as users_router
+from src.api.friends import router as friends_router
 
 main_router = APIRouter(prefix="/api")
 
@@ -12,4 +13,4 @@ async def health_check() -> dict:
 
 main_router.include_router(auth_router)
 main_router.include_router(users_router)
-
+main_router.include_router(friends_router)

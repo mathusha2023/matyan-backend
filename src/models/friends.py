@@ -1,3 +1,5 @@
+import uuid
+
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column
 from typing import Annotated
@@ -9,5 +11,5 @@ class FriendModel(Base):
     __tablename__ = "friends"
 
     id: Mapped[intpk]
-    user_id: Mapped[Annotated[int, mapped_column(ForeignKey("users.id"))]]
-    friend_id: Mapped[Annotated[int, mapped_column(ForeignKey("users.id"))]]
+    user_id: Mapped[Annotated[uuid.UUID, mapped_column(ForeignKey("users.id"))]]
+    friend_id: Mapped[Annotated[uuid.UUID, mapped_column(ForeignKey("users.id"))]]

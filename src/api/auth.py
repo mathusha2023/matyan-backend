@@ -1,10 +1,8 @@
 from fastapi import APIRouter, HTTPException
 from starlette import status
 from src.keycloak.keycloak_openid import keycloak_openid
-from src.api.dependencies import UserDepend
-from src.schemes import RefreshTokenScheme, TokenScheme, AuthUrlScheme, UserRoleScheme
+from src.schemes import RefreshTokenScheme, TokenScheme, AuthUrlScheme
 from src.settings import settings
-from src.schemes import UserAuthScheme as User
 
 router = APIRouter(tags=["Authorization"], prefix="/auth")
 
@@ -81,19 +79,3 @@ async def logout(refresh_token: RefreshTokenScheme) -> dict:
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=f"Logout failed: {str(e)}"
         )
-
-
-@router.get("/me", summary="Get all user data")
-async def get_user_data(user: User = UserDepend) -> User:
-    """
-    Получение информации о пользователе из токена
-    """
-    return user
-
-
-@router.get("/roles", summary="Get user roles")
-async def get_roles(user: User = UserDepend) -> UserRoleScheme:
-    """
-    Получение ролей пользователя из токена
-    """
-    return UserRoleScheme(roles=user.roles)

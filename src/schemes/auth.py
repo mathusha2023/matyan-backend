@@ -26,7 +26,3 @@ class TokenScheme(BaseModel):
 
 class RefreshTokenScheme(BaseModel):
     refresh_token: str
-
-
-class UserRoleScheme(BaseModel):
-    roles: List[str]

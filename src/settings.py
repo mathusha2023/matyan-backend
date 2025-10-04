@@ -21,6 +21,8 @@ class Settings(BaseSettings):
     keycloak_realm: str
     keycloak_redirect_url: str
 
+    api_secret_key: str
+
     @property
     def postgres_url(self) -> str:
         return (

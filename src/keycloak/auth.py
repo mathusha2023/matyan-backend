@@ -1,11 +1,13 @@
+import secrets
 from typing import List
 
-from fastapi import Depends, HTTPException
+from fastapi import Depends, HTTPException, Header
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from starlette import status
 
 from src.keycloak.keycloak_openid import keycloak_openid
 from src.schemes import UserAuthScheme as User
+from src.settings import settings
 
 security = HTTPBearer()
 
@@ -61,3 +63,9 @@ def require_role(required_roles: List[str]):
         return user
 
     return role_checker
+
+
+async def verify_secret_token(x_secret_token: str = Header(...)):
+    if not secrets.compare_digest(x_secret_token, settings.api_secret_key):
+        raise HTTPException(status_code=403, detail="Invalid secret token")
+    return True

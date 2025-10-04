@@ -22,3 +22,5 @@ class UserScheme(KeycloakUserScheme):
     created_at: datetime
 
 
+class UserFriendsScheme(UserListScheme):
+    last_login: datetime

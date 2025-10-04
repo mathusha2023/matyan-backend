@@ -26,7 +26,8 @@ async def get_user(session: SessionDepend, user: UserDepend) -> UserScheme:
 @router.get("/userinfo/{username}")
 async def get_user_by_username(session: SessionDepend, username: str, user: UserDepend) -> UserListScheme:
     repo = UserRepository(session)
-    res_user = await repo.get_user_by_username(username)
-    if res_user is None:
-        raise HTTPException(status_code=404, detail="User not found")
-    return res_user
+    try:
+        res_user = await repo.get_user_by_username(username)
+        return res_user
+    except Exception as e:
+        raise HTTPException(status_code=404, detail=str(e))

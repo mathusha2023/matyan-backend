@@ -5,6 +5,12 @@ from src.schemes import UserListScheme
 from src.schemes.base import BaseScheme
 
 
+class MyFriendRequestScheme(BaseScheme):
+    id: int
+    friend: UserListScheme
+    created_at: datetime
+
+
 class FriendRequestScheme(BaseScheme):
     id: int
     friend_id: uuid.UUID

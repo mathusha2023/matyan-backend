@@ -17,5 +17,9 @@ class UserModel(Base):
     lvl2_solved: Mapped[Annotated[bool, mapped_column(default=False)]]
     lvl3_solved: Mapped[Annotated[bool, mapped_column(default=False)]]
     last_login: Mapped[Annotated[datetime, mapped_column(default=datetime.now())]]
-    friend_requests_to: Mapped[List["FriendRequestModel"]] = relationship(back_populates="user", foreign_keys="FriendRequestModel.user_id")
-    friend_requests_from: Mapped[List["FriendRequestModel"]] = relationship(back_populates="user", foreign_keys="FriendRequestModel.friend_id")
+    friend_requests_to: Mapped[List["FriendRequestModel"]] = relationship(back_populates="user",
+                                                                          foreign_keys="FriendRequestModel.user_id")
+    friend_requests_from: Mapped[List["FriendRequestModel"]] = relationship(back_populates="user",
+                                                                            foreign_keys="FriendRequestModel.friend_id")
+    friend_to: Mapped[List["FriendModel"]] = relationship(back_populates="user", foreign_keys="FriendModel.user_id")
+    friend_from: Mapped[List["FriendModel"]] = relationship(back_populates="user", foreign_keys="FriendModel.friend_id")

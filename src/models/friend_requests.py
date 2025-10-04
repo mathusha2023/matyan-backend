@@ -13,5 +13,7 @@ class FriendRequestModel(Base):
     id: Mapped[intpk]
     user_id: Mapped[Annotated[uuid.UUID, mapped_column(ForeignKey("users.id"))]]
     friend_id: Mapped[Annotated[uuid.UUID, mapped_column(ForeignKey("users.id"))]]
-    user: Mapped["UserModel"] = relationship(back_populates="friend_requests_to", foreign_keys="FriendRequestModel.user_id")
-    friend: Mapped["UserModel"] = relationship(back_populates="friend_requests_from", foreign_keys="FriendRequestModel.friend_id")
+    user: Mapped["UserModel"] = relationship(back_populates="friend_requests_to",
+                                             foreign_keys="FriendRequestModel.user_id")
+    friend: Mapped["UserModel"] = relationship(back_populates="friend_requests_from",
+                                               foreign_keys="FriendRequestModel.friend_id")

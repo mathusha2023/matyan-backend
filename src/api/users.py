@@ -23,8 +23,8 @@ async def get_user(session: SessionDepend, user: UserDepend) -> UserScheme:
     return res_user
 
 
-@router.get("/{username}")
-async def get_user_by_id(session: SessionDepend, username: str, user: UserDepend) -> UserListScheme:
+@router.get("/userinfo/{username}")
+async def get_user_by_username(session: SessionDepend, username: str, user: UserDepend) -> UserListScheme:
     repo = UserRepository(session)
     res_user = await repo.get_user_by_username(username)
     if res_user is None:

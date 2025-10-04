@@ -5,7 +5,7 @@ from fastapi import APIRouter, HTTPException
 
 from src.api.dependencies import SessionDepend, UserDepend
 from src.database.repository import UserRepository
-from src.schemes import SuccessScheme, FriendRequestScheme
+from src.schemes import SuccessScheme, FriendRequestScheme, UserListScheme
 
 router = APIRouter(tags=["Friends"], prefix="/users/friends")
 
@@ -28,3 +28,16 @@ async def get_friend_requests(session: SessionDepend, user: UserDepend) -> List[
     return res
 
 
+@router.post("/requests/{request_id}/answer")
+async def answer_friend_request(request_id: int, accept: bool, session: SessionDepend, user: UserDepend) -> SuccessScheme:
+    repo = UserRepository(session)
+    res = await repo.answer_friend_request(request_id, user.id, accept)
+    if res is None:
+        raise HTTPException(status_code=404, detail="Friend request not found")
+    return SuccessScheme()
+
+@router.get("")
+async def get_friends(session: SessionDepend, user: UserDepend) -> List[UserListScheme]:
+    repo = UserRepository(session)
+    res = await repo.get_friends(user.id)
+    return res
